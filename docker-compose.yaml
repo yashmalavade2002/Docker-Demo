@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  alpine:
+    image: alpine:latest
+    container_name: alpine-box
+    command: tail -f /dev/null  # keeps container running
+    networks:
+      - custom-net
+    volumes:
+      - shared-data:/data
+
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu-box
+    command: tail -f /dev/null  # keeps container running
+    networks:
+      - custom-net
+    volumes:
+      - shared-data:/data
+
+  redis:
+    image: redis:alpine
+    container_name: redis-server
+    ports:
+      - "6379:6379"
+    networks:
+      - custom-net
+
+volumes:
+  shared-data:
+
+networks:
+  custom-net:
+    driver: bridge
+    
